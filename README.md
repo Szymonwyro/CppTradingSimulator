@@ -49,10 +49,13 @@ J_t +
 
 Where:
 
+```math
+
 - \(J_t\) = news-driven jump component
 - \(\mu_t\) = effective drift
 - \(\sigma_t\) = stochastic volatility process
 - \(\epsilon_t \sim N(0,1)\)
+```
 
 Additional features:
 - stochastic volatility mean reversion
