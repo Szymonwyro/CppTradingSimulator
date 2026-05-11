@@ -1,0 +1,11 @@
+edit structure of src
+
+should containt:
+strategies/
+engine/
+agents/
+tests/
+
+agentic structure:
+strategies holds all strategies
+agents hold inventory, capital and call strategies

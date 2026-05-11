@@ -1,0 +1,19 @@
+Current State
+
+Relevant Improvements
+
+engine/
+    orderbook/
+    execution/
+
+allows bots to impact prices by filling orderbook layers
+may require some modification as we currently generate a 'true price'
+
+key chagnes
+
+add possible regime changes
+ensure pricemodel is not the actual price, just the fair price
+then build out the orderbook where random traders etc influence the mid price
+    this allows occasional fair price tracking
+                occasional divergence
+                occasional overshoots of fair price

@@ -1,0 +1,37 @@
+---// Current Model //---
+
+S(t+1)​=S(t) * ​exp((μ - 0.5*​σ^2)dt + σsqrt(dt)*​ϵ) × (1+Jt​)
+
+---// Next Steps // ---
+
+Drift = log-return contribution
+Volatility = log-return shock
+BUT Jump = % price jump (later convert to log space) // done
+
+1) News increases volatility drastically (e.g. ​σ -> 2​σ) and for sustained duration
+2) Multiple news events only result in 1 jump calculation, should be sumJumps
+3) Volatility clustering to follow GARCH behaviour
+
+also convert volatility, drift, jump to vectors (push_back, and then can plot)
+
+also make news impact drift too, similar to regime change for volatility
+
+---// Volatility Modelling //---
+
+Current approach treats σ as fixed; base + shocks
+// now implements mean-reverting model
+
+Two ideas to model volatility stochastically:
+    1) Mean-reverting volatility (Ornstein-Uhlenbeck)
+        σt+1 ​= σt ​+ θ(σ0 ​− σt​)dt + ηϵ
+
+    2) Multiplicative volatility (GARCH)
+        σ(t+1)^2 ​= ω + α(rt)^2 ​+ β(σt)^2​
+
+// Add Bid-Ask Spread
+    Spreads scale with volaitlity (with k and vol)
+
+// Next steps to add random and directional news traders
+    Random traders are... random
+    News traders price-in market info to exacerabate jumps and drift, proportional to size of move
+     
