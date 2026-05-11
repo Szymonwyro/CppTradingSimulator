@@ -37,17 +37,18 @@ The model currently supports:
 
 # Current Price Model
 
-The simulated price follows:
+The simulated mid-price price follows a jump-diffusion stochastic process:
 
-\[
+```math
 S_{t+1} = S_t \cdot \exp\left(
 J_t +
 (\mu_t - \frac{1}{2}\sigma_t^2)dt +
 \sigma_t\sqrt{dt}\epsilon_t
 \right)
-\]
+```
 
 Where:
+
 - \(J_t\) = news-driven jump component
 - \(\mu_t\) = effective drift
 - \(\sigma_t\) = stochastic volatility process
