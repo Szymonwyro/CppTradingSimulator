@@ -49,12 +49,11 @@ J_t +
 
 Where:
 
-
-- \(S_t\) = asset mid-price at time \(t\)
-- \(J_t\) = news-driven jump component
-- \(\mu_t\) = effective drift term
-- \(\sigma_t\) = effective volatility
-- \(\epsilon_t \sim \mathcal{N}(0,1)\)
+- $S_t$ = asset mid-price at time $t$
+- $J_t$ = news-driven jump component
+- $\mu_t$ = effective drift term
+- $\sigma_t$ = effective volatility
+- $\epsilon_t \sim \mathcal{N}(0,1)$ = standard Gaussian noise
 
 Additional features:
 - stochastic volatility mean reversion
