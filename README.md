@@ -49,19 +49,65 @@ J_t +
 
 Where:
 
-```math
 
+- \(S_t\) = asset mid-price at time \(t\)
 - \(J_t\) = news-driven jump component
-- \(\mu_t\) = effective drift
-- \(\sigma_t\) = stochastic volatility process
-- \(\epsilon_t \sim N(0,1)\)
-```
+- \(\mu_t\) = effective drift term
+- \(\sigma_t\) = effective volatility
+- \(\epsilon_t \sim \mathcal{N}(0,1)\)
 
 Additional features:
 - stochastic volatility mean reversion
 - volatility regime shifts
 - event persistence
 - jump clustering through overlapping news events
+
+## Volatility Dynamics
+
+Baseline volatility evolves through a mean-reverting stochastic process:
+
+```math
+\sigma_{t+1}^{base}
+=
+\sigma_t
++
+\theta(\sigma_0 - \sigma_t)dt
++
+\eta \epsilon_t^{(vol)}
+```
+
+Effective volatility is then adjusted by active news regimes:
+
+```math
+\sigma_t^{eff}
+=
+\sigma_t^{base}(1 + 3V_t)
+```
+
+Where:
+
+- \(\theta\) = mean reversion speed
+- \(\sigma_0\) = long-run volatility level
+- \(\eta\) = volatility-of-volatility parameter
+- \(V_t\) = cumulative volatility impact from active news events
+
+---
+
+## News Event Effects
+
+Each news event may temporarily alter:
+
+- price jumps
+- drift
+- volatility
+- market regime persistence
+
+Examples include:
+- quarterly earnings releases
+- macroeconomic shocks
+- firm-specific rumors
+
+News effects can overlap, creating clustered volatility regimes and jump cascades.
 
 ---
 
