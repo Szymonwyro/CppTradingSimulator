@@ -85,10 +85,10 @@ Effective volatility is then adjusted by active news regimes:
 
 Where:
 
-- \(\theta\) = mean reversion speed
-- \(\sigma_0\) = long-run volatility level
-- \(\eta\) = volatility-of-volatility parameter
-- \(V_t\) = cumulative volatility impact from active news events
+- $\theta$ = mean reversion speed
+- $\sigma_0$ = long-run volatility level
+- $\eta$ = volatility-of-volatility parameter
+- $\V_t$ = cumulative volatility impact from active news events
 
 ---
 
