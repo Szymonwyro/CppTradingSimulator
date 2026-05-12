@@ -15,4 +15,9 @@ double RandomEngine::normal() {
     return normal_dist(generator);
 }
 
+int RandomEngine::randint(int min, int max) {
+    std::uniform_int_distribution<> dist(min, max);
+    return dist(generator);
+}
+
 
