@@ -1,6 +1,6 @@
 #pragma once
 #include "Order.h"
-#include "MarketState.h"
+#include "PriceStep.h"
 
 class OrderBook;
 
@@ -10,6 +10,6 @@ public:
 
     virtual Order generateOrder(
         int traderId,
-        const MarketState& market
+        const PriceStep& market
     ) = 0;
 };
