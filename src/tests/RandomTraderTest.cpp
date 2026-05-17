@@ -1,16 +1,18 @@
 #include <iostream>
 #include "RandomEngine.h"
 #include "RandomStrategy.h"
-#include "MarketState.h"
+#include "PriceStep.h"
 
-int main() {
-    RandomEngine rng(42);
-
-    MarketState market{
-        market.bestBid = 100.0,
-        market.bestAsk = 101.0,
-        market.midPrice = 100.5,
-        market.volatility = 0.2
+int main () {
+    PriceStep market{
+        market.day = 0,
+        market.bid = 100.0,
+        market.ask = 101.0,
+        market.mid = 100.5,
+        market.prevMid = 100.0,
+        market.vol = 0.2,
+        market.drift = 0.01,
+        market.jump = 0.0
     };
 
     RandomStrategy strategy(rng);
