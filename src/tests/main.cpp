@@ -3,22 +3,12 @@
 #include "PriceModel.h"
 #include "NewsGenerator.h"
 #include "NewsEvent.h"
+#include "PriceStep.h"
+#include "PriceStep.h"
 #include <vector>
 #include <string>
 #include <fstream>
 #include <algorithm>
-
-struct PriceStep {
-    int day;
-    double mid;
-    double bid;
-    double ask;
-    double spread;
-    double drift;
-    double vol;
-    double jump;
-    std::vector<std::string> news;
-};
 
 int main() {
     RandomEngine rng(60);
@@ -43,12 +33,14 @@ int main() {
         double mid = model.getPrice();
         double vol = model.getLastVol();
 
-        double base_spread = 10.0; // big spread just for visibility in plot
-        double k = 10.0; // sensitivity to volatility
+        double base_spread = 5.0; // big spread just for visibility in plot
+        double k = 5.0; // sensitivity to volatility
         
         double spread = base_spread + k * vol;
         double bid = mid - spread / 2.0;
         double ask = mid + spread / 2.0;
+
+        double prevMid = (i > 0) ? history.back().mid : mid;
     
 
         //Collect news for the day
@@ -71,13 +63,14 @@ int main() {
         history.push_back({ 
             (int)i,
             mid,
+            prevMid,
             bid,
             ask,
             spread,
             model.getLastDrift(),
             vol,
             model.getLastJump(),
-            todaysNews});
+            std::vector<std::string>(todaysNews)});
 
     }
 
@@ -89,6 +82,7 @@ int main() {
     for (const auto& step : history) {
         outFile << step.day << ","
                 << step.mid << ","
+                << step.prevMid << ","
                 << step.bid << ","
                 << step.ask << ","
                 << step.spread << ","
