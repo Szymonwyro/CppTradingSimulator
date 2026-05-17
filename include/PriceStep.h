@@ -1,9 +1,14 @@
 #pragma once
 
+#include <vector>
+#include <string>
+#include "NewsEvent.h"
+
+
 struct PriceStep {
     int day;
     double mid;
-    double lastPrice;
+    double prevMid;
     double bid;
     double ask;
 
@@ -12,4 +17,4 @@ struct PriceStep {
     double vol;
     double jump;
     std::vector<std::string> news;
-}
+};
