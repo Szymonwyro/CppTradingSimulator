@@ -1,8 +1,9 @@
 #pragma once
 
-#include "strategy.h"
+#include "Strategy.h"
 #include "RandomEngine.h"
 #include "Order.h"
+#include "PriceStep.h"
 
 class RandomStrategy : public Strategy {
 private:
@@ -13,6 +14,6 @@ public:
 
     Order generateOrder(
         int traderId,
-        const MarketState& market
+        const PriceStep& market
     ) override;
 };
