@@ -1,12 +1,12 @@
 #include "RandomStrategy.h"
-#include "MarketState.h"
+#include "PriceStep.h"
 #include <random>
 
 RandomStrategy::RandomStrategy(RandomEngine& engine) : rng(engine) {}
 
 Order RandomStrategy::generateOrder(
     int traderId,
-    const MarketState& market
+    const PriceStep& market
 ) {
     bool buy = rng.uniform() < 0.5;
 
@@ -15,9 +15,9 @@ Order RandomStrategy::generateOrder(
     double limitPrice;
 
     if (buy) {
-        limitPrice = market.bestBid * (1 - offset);
+        limitPrice = market.bid * (1 - offset);
     } else {
-        limitPrice = market.bestAsk * (1 + offset);
+        limitPrice = market.ask * (1 + offset);
     }
     int quantity = rng.randint(1, 10);
 
