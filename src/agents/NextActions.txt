@@ -1,0 +1,12 @@
+Implement agent logic:
+    "What should I do?"
+    "Can I afford to do so & what is my PnL"
+
+1   Create class
+2   Implement logic
+3   Call startegy
+4   Order execution
+5   Calculate / Display cumulative PnL
+6   Possibly account for risk / position sizing in Strategies later
+7   Tune params for relevant traders (For now MomentumFactor / Lookback window to generate signal)
+8   Add true performance metrics like sharpe / drawdown / (hitrate once execution fully developed)
