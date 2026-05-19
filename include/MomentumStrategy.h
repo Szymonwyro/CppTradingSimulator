@@ -1,7 +1,8 @@
 #pragma once
 
-#include "strategy.h"
+#include "Strategy.h"
 #include "Order.h"
+#include "PriceStep.h"
 
 class MomentumStrategy : public Strategy {
     private:
@@ -12,6 +13,6 @@ class MomentumStrategy : public Strategy {
 
     Order generateOrder(
         int traderId,
-        const MarketState& market
+        const PriceStep& market
     ) override;
 };
