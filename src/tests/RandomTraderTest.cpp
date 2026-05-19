@@ -15,6 +15,7 @@ int main () {
         market.jump = 0.0
     };
 
+    RandomEngine rng(42);
     RandomStrategy strategy(rng);
     
     for (int i = 0; i < 20; ++i) {
