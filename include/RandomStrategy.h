@@ -12,7 +12,7 @@ private:
 public:
     RandomStrategy(RandomEngine& rng_);
 
-    Order generateOrder(
+    std::vector<Order> generateOrders(
         int traderId,
         const PriceStep& market
     ) override;
