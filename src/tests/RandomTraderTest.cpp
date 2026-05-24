@@ -20,12 +20,14 @@ int main () {
     
     for (int i = 0; i < 20; ++i) {
 
-        Order order = strategy.generateOrder(1, market);
+        std::vector<Order> orders = strategy.generateOrders(1, market);
 
-        std::cout << "Trader " << order.traderId 
-                  << " places a " << (order.side == Side::BUY ? "BUY" : "SELL") 
-                  << " order for " << order.quantity 
-                  << " shares at price " << order.price << std::endl;
+        for (const auto& order : orders) {
+            std::cout << "Trader " << order.traderId 
+                      << " places a " << (order.side == Side::BUY ? "BUY" : "SELL") 
+                      << " order for " << order.quantity 
+                      << " shares at price " << order.price << std::endl;
+        }
     }
 
     return 0;

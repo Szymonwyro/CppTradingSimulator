@@ -14,15 +14,17 @@ int main () {
         market.jump = 0.0
     };
 
-    MomentumStrategy strategy(10.0); // Momentum factor of 10 for strong response to price changes
+    MomentumStrategy strategy(2.0, 3, 0.01); // Momentum factor of 2, lookback period of 3, threshold of 0.01
 
     for (int i = 0; i < 20; ++i) {
-        Order order = strategy.generateOrder(1, market);
+        std::vector<Order> orders = strategy.generateOrders(1, market);
 
-        std::cout << "Trader " << order.traderId 
-                  << " places a " << (order.side == Side::BUY ? "BUY" : "SELL") 
-                  << " order for " << order.quantity 
-                  << " shares at price " << order.price << std::endl;
+        for (const auto& order : orders) {
+            std::cout << "Trader " << order.traderId 
+                      << " places a " << (order.side == Side::BUY ? "BUY" : "SELL") 
+                      << " order for " << order.quantity 
+                      << " shares at price " << order.price << std::endl;
+        }
 
         // Simulate price change for next iteration
         market.prevMid = market.mid;
