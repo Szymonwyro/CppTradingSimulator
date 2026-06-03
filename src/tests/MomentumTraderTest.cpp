@@ -41,15 +41,16 @@ int main() {
         std::vector<Order> orders = strategy.generateOrders(1, history);
 
         if (orders.empty()) {
-            std::cout << "Day " << i << ": no signal\n";
+            std::cout << "Day " << i << ": no signal" << " | Price: " << newMid << "\n";
         }
 
         for (const auto& order : orders) {
             std::cout << "Day " << i
-                      << " | Trader " << order.traderId
+                      << " | Trader: " << order.traderId
                       << " | " << (order.side == Side::BUY ? "BUY" : "SELL")
                       << " | qty: " << order.quantity
-                      << " | price: " << order.price << "\n";
+                      << " | Price: " << newMid
+                      << " | limit price: " << order.price << "\n";
         }
     }
 
