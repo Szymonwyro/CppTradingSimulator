@@ -3,15 +3,13 @@
 #include "Strategy.h"
 #include "Order.h"
 #include "PriceStep.h"
-
-#include <deque>
+#include <vector>
 
 class MomentumStrategy : public Strategy {
     private:
         double momentumFactor;
         int lookbackPeriod;
         double threshold;
-        std::deque<double> priceHistory;
 
     public:
         MomentumStrategy(
@@ -20,8 +18,8 @@ class MomentumStrategy : public Strategy {
             double threshold
         );
 
-    Order generateOrder(
+    std::vector<Order> generateOrders(
         int traderId,
-        const PriceStep& market
+        const std::vector<PriceStep>& history
     ) override;
 };
