@@ -1,36 +1,63 @@
 #include <iostream>
+#include <vector>
+#include <cmath>
 #include "PriceStep.h"
 #include "MomentumStrategy.h"
+#include "RandomEngine.h"
+#include "Order.h"
 
-int main () {
-    PriceStep market{
-        market.day = 0,
-        market.bid = 100.0,
-        market.ask = 101.0,
-        market.mid = 100.5,
-        market.prevMid = 100.0,
-        market.vol = 0.2,
-        market.drift = 0.01,
-        market.jump = 0.0
-    };
+int main() {
+    RandomEngine rng(42);
 
-    MomentumStrategy strategy(2.0, 3, 0.01); // Momentum factor of 2, lookback period of 3, threshold of 0.01
+    std::vector<PriceStep> history;
+    history.push_back({
+        0,      // day
+        100.5,  // mid
+        100.0,  // prevMid
+        100.0,  // bid
+        101.0,  // ask
+        1.0,    // spread
+        0.01,   // drift
+        0.2,    // vol
+        0.0,    // jump
+        {}      // news
+    });
 
-    for (int i = 0; i < 20; ++i) {
-        std::vector<Order> orders = strategy.generateOrders(1, market);
+    MomentumStrategy strategy(2.0, 3, 0.01);
 
-        for (const auto& order : orders) {
-            std::cout << "Trader " << order.traderId 
-                      << " places a " << (order.side == Side::BUY ? "BUY" : "SELL") 
-                      << " order for " << order.quantity 
-                      << " shares at price " << order.price << std::endl;
+    for (int i = 1; i < 20; ++i) {
+        double prevMid = history.back().mid;
+        double newMid = prevMid * std::exp(
+            (0.01 - 0.5 * 0.2 * 0.2) * (1.0/252.0)
+            + 0.2 * std::sqrt(1.0/252.0) * rng.normal()
+        );
+
+        history.push_back({
+            i,
+            newMid,
+            prevMid,
+            newMid - 0.5,
+            newMid + 0.5,
+            1.0,
+            0.01,
+            0.2,
+            0.0,
+            {}
+        });
+
+        std::vector<Order> orders = strategy.generateOrders(1, history);
+
+        if (orders.empty()) {
+            std::cout << "Day " << i << ": no signal\n";
         }
 
-        // Simulate price change for next iteration
-        market.prevMid = market.mid;
-        market.mid += (market.drift + market.vol * ((rand() / double(RAND_MAX)) - 0.5)) * market.mid;
-        market.bid = market.mid - 0.5;
-        market.ask = market.mid + 0.5;
+        for (const auto& order : orders) {
+            std::cout << "Day " << i
+                      << " | Trader " << order.traderId
+                      << " | " << (order.side == Side::BUY ? "BUY" : "SELL")
+                      << " | qty: " << order.quantity
+                      << " | price: " << order.price << "\n";
+        }
     }
 
     return 0;
