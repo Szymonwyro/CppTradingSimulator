@@ -15,9 +15,9 @@ ASMarketMakingStrategy::ASMarketMakingStrategy(
 //}
 
 std::vector<Order> ASMarketMakingStrategy::generateOrders(
-    int traderId,
-    const PriceStep& market
+    const std::vector<PriceStep>& history
 ) {
+    const PriceStep& market = history.back();
     double t = market.day / static_cast<double>(horizon); // Normalize time to [0,1]
     double timeRemaining = (1.0 - t);
 
@@ -29,8 +29,8 @@ std::vector<Order> ASMarketMakingStrategy::generateOrders(
     double askPrice = reservationPrice + halfSpread;
 
     return {
-        { traderId, Side::BUY,  bidPrice, static_cast<int>(orderSize) },
-        { traderId, Side::SELL, askPrice, static_cast<int>(orderSize) }
+        { "ASMarketMaker", Side::BUY,  bidPrice, static_cast<int>(orderSize) },
+        { "ASMarketMaker", Side::SELL, askPrice, static_cast<int>(orderSize) }
     };
 }
 
