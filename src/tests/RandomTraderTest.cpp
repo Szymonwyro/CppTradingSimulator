@@ -1,33 +1,41 @@
 #include <iostream>
+#include <vector>
 #include "RandomEngine.h"
 #include "RandomStrategy.h"
 #include "PriceStep.h"
+#include "Order.h"
+#include "NewsGenerator.h"
+#include "PriceModel.h"
+
 
 int main () {
-    PriceStep market{
-        market.day = 0,
-        market.bid = 100.0,
-        market.ask = 101.0,
-        market.mid = 100.5,
-        market.prevMid = 100.0,
-        market.vol = 0.2,
-        market.drift = 0.01,
-        market.jump = 0.0
-    };
-
     RandomEngine rng(42);
+    NewsGenerator newsGen;
+
+    PriceModel model(100.0, 0.01, 0.2, rng, &newsGen, 20); // initialPrice, drift, volatility, rng, newsGen, horizon
     RandomStrategy strategy(rng);
-    
+
+    std::vector<PriceStep> history;
+    double dt = 1.0 / 252.0; // daily steps
+
     for (int i = 0; i < 20; ++i) {
+        model.step(dt);
 
-        std::vector<Order> orders = strategy.generateOrders(1, market);
+        double newMid = model.getPrice();
+        double prevMid = history.empty() ? newMid : history.back().mid;
 
-        for (const auto& order : orders) {
-            std::cout << "Trader " << order.traderId 
-                      << " places a " << (order.side == Side::BUY ? "BUY" : "SELL") 
-                      << " order for " << order.quantity 
-                      << " shares at price " << order.price << std::endl;
-        }
+        history.push_back({
+            i,
+            newMid,
+            prevMid,
+            newMid - 0.5,
+            newMid + 0.5,
+            1.0, // spread
+            model.getLastDrift(),
+            model.getLastVol(),
+            model.getLastJump(),
+            {}
+        });
     }
 
     return 0;
