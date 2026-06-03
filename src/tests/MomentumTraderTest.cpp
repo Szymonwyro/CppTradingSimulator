@@ -2,35 +2,28 @@
 #include <vector>
 #include <cmath>
 #include "PriceStep.h"
+#include "NewsGenerator.h"
+#include "PriceModel.h"
 #include "MomentumStrategy.h"
 #include "RandomEngine.h"
 #include "Order.h"
 
 int main() {
     RandomEngine rng(42);
+    NewsGenerator newsGen;
+
+    PriceModel model(100.0, 0.01, 0.2, rng, &newsGen, 20); // initialPrice, drift, volatility, rng, newsGen, horizon
+
+    MomentumStrategy strategy(2.0, 3, 0.01); // momentumFactor, lookbackPeriod, threshold
 
     std::vector<PriceStep> history;
-    history.push_back({
-        0,      // day
-        100.5,  // mid
-        100.0,  // prevMid
-        100.0,  // bid
-        101.0,  // ask
-        1.0,    // spread
-        0.01,   // drift
-        0.2,    // vol
-        0.0,    // jump
-        {}      // news
-    });
+    double dt = 1.0 / 252.0; // daily steps
 
-    MomentumStrategy strategy(2.0, 3, 0.01);
+    for (int i = 0; i < 20; ++i) {
+        model.step(dt);
 
-    for (int i = 1; i < 20; ++i) {
-        double prevMid = history.back().mid;
-        double newMid = prevMid * std::exp(
-            (0.01 - 0.5 * 0.2 * 0.2) * (1.0/252.0)
-            + 0.2 * std::sqrt(1.0/252.0) * rng.normal()
-        );
+        double newMid = model.getPrice();
+        double prevMid = (i > 0) ? history.back().mid : newMid;
 
         history.push_back({
             i,
