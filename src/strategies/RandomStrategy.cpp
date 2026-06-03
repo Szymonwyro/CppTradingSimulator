@@ -4,10 +4,11 @@
 
 RandomStrategy::RandomStrategy(RandomEngine& engine) : rng(engine) {}
 
-Order RandomStrategy::generateOrder(
+std::vector<Order> RandomStrategy::generateOrders(
     int traderId,
-    const PriceStep& market
+    const std::vector<PriceStep>& history
 ) {
+    const PriceStep& market = history.back();
     bool buy = rng.uniform() < 0.5;
 
     double offset = rng.normal() * 0.002;
@@ -22,9 +23,11 @@ Order RandomStrategy::generateOrder(
     int quantity = rng.randint(1, 10);
 
     return {
-        traderId,
-        buy ? Side::BUY : Side::SELL,
-        limitPrice,
-        quantity
+        Order{
+            "RandomTrader",
+            buy ? Side::BUY : Side::SELL,
+            limitPrice,
+            quantity
+        }
     };
 }
