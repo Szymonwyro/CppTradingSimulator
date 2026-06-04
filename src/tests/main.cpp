@@ -11,7 +11,7 @@
 #include <algorithm>
 
 int main() {
-    RandomEngine rng(60);
+    RandomEngine rng(42);
     NewsGenerator newsGen;
 
     int horizon = 2016; // 4 years of trading days
