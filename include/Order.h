@@ -1,12 +1,14 @@
 #pragma once
 
+#include <string>
+
 enum class Side {
     BUY,
     SELL
 };
 
 struct Order {
-    int traderId;
+    std::string traderId;
     Side side;
     double price;
     int quantity;
