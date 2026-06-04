@@ -26,7 +26,7 @@ std::vector<Order> MomentumStrategy::generateOrders(
         : history.back().ask * (1 + offset);
 
     return {{
-        traderId,
+        "MomentumTrader",
         buy ? Side::BUY : Side::SELL,
         limitPrice,
         1 // fixed quantity for simplicity
