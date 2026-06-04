@@ -11,6 +11,6 @@ public:
 
     virtual std::vector<Order> generateOrders(
         int traderId,
-        const PriceStep& market
+        const std::vector<PriceStep>& history
     ) = 0;
 };
