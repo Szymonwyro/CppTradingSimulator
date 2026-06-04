@@ -23,8 +23,10 @@ class ASMarketMakingStrategy : public Strategy {
 
     std::vector<Order> generateOrders(
         int traderId,
-        const PriceStep& market
+        const std::vector<PriceStep>& history
     ) override;
+
+    double getInventory() const { return inventory; }
 
     double onFill(double qty); // Update inventory and return PnL from the fill
 };
