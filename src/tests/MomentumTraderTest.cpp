@@ -14,16 +14,16 @@ int main() {
 
     PriceModel model(100.0, 0.01, 0.2, rng, &newsGen, 20); // initialPrice, drift, volatility, rng, newsGen, horizon
 
-    MomentumStrategy strategy(2.0, 3, 0.01); // momentumFactor, lookbackPeriod, threshold
+    MomentumStrategy strategy(1.0, 3, 0.01); // momentumFactor, lookbackPeriod, threshold
 
     std::vector<PriceStep> history;
     double dt = 1.0 / 252.0; // daily steps
 
-    for (int i = 0; i < 20; ++i) {
+    for (int i = 0; i < 100; ++i) {
         model.step(dt);
 
         double newMid = model.getPrice();
-        double prevMid = (i > 0) ? history.back().mid : newMid;
+        double prevMid = history.empty() ? newMid : history.back().mid;
 
         history.push_back({
             i,
