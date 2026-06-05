@@ -1,0 +1,21 @@
+Conceptuals:
+    Bids - resting buy orders, sorted by descending price
+    Asks - resting sell orders, sorted by ascending price
+
+Order Arrives:
+    Either: passive (limit order) - price is worse than current best opposite quote
+    Or: aggressive (crosses the spread) - price is at or better than best quote [order fill]
+
+Workflow at each tick:
+
+PriceStep
+.
+Agents generate orders based on new price(s) via generateOrders()
+.
+Orders arrive at OrderBook
+.
+MatchingEngine processes each order, generates Fills
+.
+Fill sent back to agents via OnFill()
+.
+PnL, spread, inventory updated
