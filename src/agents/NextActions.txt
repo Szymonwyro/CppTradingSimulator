@@ -10,3 +10,22 @@ Implement agent logic:
 6   Possibly account for risk / position sizing in Strategies later
 7   Tune params for relevant traders (For now MomentumFactor / Lookback window to generate signal)
 8   Add true performance metrics like sharpe / drawdown / (hitrate once execution fully developed)
+
+
+Implementation
+
+Trader class owns the strategy and the metrics
+    Buy fills += qty, cash -= price * qty
+    Sell fills -= qty, cash += price * qty
+    At horizon end, unrealised PnL is inventory * mid
+
+Standard metrics
+    sharpeRatio
+    maxDrawdown
+    totalPnL
+    realisedPnL
+    unrealisedPnL
+    inventoryRMSE (how much MM deviaded from neutral position)
+    fillRate
+Then computeMetrics()
+
