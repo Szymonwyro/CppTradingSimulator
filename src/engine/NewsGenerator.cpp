@@ -1,9 +1,10 @@
 #include "NewsGenerator.h"
 #include "NewsEvent.h"
 #include "PriceModel.h"
+#include "RandomEngine.h"
 #include <random>
 
-std::vector<NewsEvent> NewsGenerator::generateNews(int horizon)
+std::vector<NewsEvent> NewsGenerator::generateNews(int horizon, RandomEngine& rng)
 {
     std::vector<NewsEvent> events;
 
@@ -55,34 +56,30 @@ std::vector<NewsEvent> NewsGenerator::generateNews(int horizon)
     std::uniform_int_distribution<> signDist(0,1);
 
 
-    int extraEvents = 80;
+    double dailyEventProb = 0.05;
 
-    for( int i =0; i < extraEvents; i++) {
+    for (int day = 1; day <= horizon; ++day) {
+        if (rng.uniform() < dailyEventProb ) {
+            NewsEvent event;
+            event.day = day;
+            bool positive = rng.randint(0,1);
 
-        NewsEvent event;
-
-        event.day = dayDist(gen);
-
-        bool positive = signDist(gen);
-
-        if (typeDist(gen) == 0) {
-
-            //Macro Shock
-            event.headline = "Global macro uncertainty rises";
-            event.jump = positive ? 0.05 : -0.05;
-            event.driftImpact = positive ? 0.01 : -0.01;
-            event.volImpact = 0.3;
-            event.duration = 3;
-        }
-        else
-        {
-            //Rumor
-            event.headline = "Rumor: firm exploring strategic options";
-            event.jump = (positive ? 0.03 : -0.03);
-            event.driftImpact = positive ? 0.005 : -0.005;
-            event.volImpact = 0.2;
-            event.duration = 2;
-        }
+            if (rng.randint(0, 1) == 0) {
+                // Macro Shock
+                event.headline = "Global macro uncertainty rises";
+                event.jump = positive ? 0.05 : -0.05;
+                event.driftImpact = positive ? 0.01 : -0.01;
+                event.volImpact = 0.3;
+                event.duration = 3;
+                
+            } else {
+                // Rumor
+                event.headline = "Rumor: firm exploring strategic options";
+                event.jump = (positive ? 0.03 : -0.03);
+                event.driftImpact = positive ? 0.005 : -0.005;
+                event.volImpact = 0.2;
+                event.duration = 2;
+            }
 
         events.push_back(event);
     }
