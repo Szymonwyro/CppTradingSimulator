@@ -10,12 +10,16 @@ ASMarketMakingStrategy::ASMarketMakingStrategy(
     double initialInventory
 ) : gamma(gamma), orderSize(orderSize), horizon(horizon), k(k), inventory(initialInventory) {}
 
-// void ASMarketMakingStrategy::onFill(double qty) {
-//    inventory += qty;
-//}
+void ASMarketMakingStrategy::onFill(double qty) {
+    inventory += qty;
+}
+
+double ASMarketMakingStrategy::getInventory() const {
+    return inventory;
+}
 
 std::vector<Order> ASMarketMakingStrategy::generateOrders(
-    int traderId,
+    std::string traderId,
     const std::vector<PriceStep>& history
 ) {
     const PriceStep& market = history.back();
@@ -30,8 +34,8 @@ std::vector<Order> ASMarketMakingStrategy::generateOrders(
     double askPrice = reservationPrice + halfSpread;
 
     return {
-        { "ASMarketMaker", Side::BUY,  bidPrice, static_cast<int>(orderSize) },
-        { "ASMarketMaker", Side::SELL, askPrice, static_cast<int>(orderSize) }
+        { traderId, Side::BUY,  bidPrice, static_cast<int>(orderSize) },
+        { traderId, Side::SELL, askPrice, static_cast<int>(orderSize) }
     };
 }
 
