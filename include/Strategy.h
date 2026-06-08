@@ -2,6 +2,7 @@
 #include "Order.h"
 #include "PriceStep.h"
 #include <vector>
+#include <string>
 
 class OrderBook;
 
@@ -10,7 +11,9 @@ public:
     virtual ~Strategy() = default;
 
     virtual std::vector<Order> generateOrders(
-        int traderId,
+        std::string traderId,
         const std::vector<PriceStep>& history
     ) = 0;
+
+    virtual void onFill(double qty) {}
 };
