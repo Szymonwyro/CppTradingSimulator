@@ -3,13 +3,15 @@
 #include "Strategy.h"
 #include "Order.h"
 #include "PriceStep.h"
+#include <vector>
+#include <cmath>
 
 class ASMarketMakingStrategy : public Strategy {
     private:
-        double gamma; // risk aversion parameter
-        double orderSize; // fixed order size
-        int horizon; // time horizon for the strategy
-        double k; // market making parameter
+        double gamma;
+        double orderSize;
+        int horizon;
+        double k;
         double inventory;
 
     public:
@@ -21,12 +23,12 @@ class ASMarketMakingStrategy : public Strategy {
             double initialInventory = 0.0
         );
 
-    std::vector<Order> generateOrders(
-        int traderId,
-        const std::vector<PriceStep>& history
-    ) override;
+        std::vector<Order> generateOrders(
+            std::string traderId,
+            const std::vector<PriceStep>& history
+        ) override;
 
-    double getInventory() const { return inventory; }
+        void onFill(double qty);
 
-    double onFill(double qty); // Update inventory and return PnL from the fill
+        double getInventory() const;
 };
