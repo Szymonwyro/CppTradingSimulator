@@ -8,7 +8,7 @@ PriceModel::PriceModel(double initial_price, double drift, double volatility, Ra
     : price(initial_price), mu(drift), sigma(volatility), rng(rng_), newsGen(newsGen_), currentDay(0)
 {
     if (newsGen) {
-        newsEvents = newsGen->generateNews(horizon);
+        newsEvents = newsGen->generateNews(horizon, rng);
     }
 }
 
