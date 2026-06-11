@@ -1,0 +1,6 @@
+C:/Users/szymw/TradingSimulator/CppEngine/build/CMakeFiles/price_sim.dir
+C:/Users/szymw/TradingSimulator/CppEngine/build/CMakeFiles/as_test.dir
+C:/Users/szymw/TradingSimulator/CppEngine/build/CMakeFiles/momentum_trader_test.dir
+C:/Users/szymw/TradingSimulator/CppEngine/build/CMakeFiles/random_trader_test.dir
+C:/Users/szymw/TradingSimulator/CppEngine/build/CMakeFiles/edit_cache.dir
+C:/Users/szymw/TradingSimulator/CppEngine/build/CMakeFiles/rebuild_cache.dir

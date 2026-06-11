@@ -11,7 +11,7 @@ int main() {
     NewsGenerator newsGen;
 
     PriceModel model(100.0, 0.01, 0.2, rng, &newsGen, 20); // initialPrice, drift, volatility, rng, newsGen, horizon
-    ASMarketMakingStrategy strategy(0.1, 5, 20, 5.0); // gamma, orderSize, horizon, k
+    ASMarketMakingStrategy strategy("ASTrader", 0.1, 5, 20, 5.0, 0.0); // traderId, gamma, orderSize, horizon, k, inventory
 
     std::vector<PriceStep> history;
     double dt = 1.0 / 252.0; // daily steps
@@ -35,7 +35,7 @@ int main() {
             {}
         });
 
-        std::vector<Order> orders = strategy.generateOrders(1, history);
+        std::vector<Order> orders = strategy.generateOrders("ASTrader", history);
 
         if (orders.size() == 2) {
             double bid = orders[0].price;

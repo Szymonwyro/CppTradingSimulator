@@ -14,7 +14,7 @@ int main() {
 
     PriceModel model(100.0, 0.01, 0.2, rng, &newsGen, 20); // initialPrice, drift, volatility, rng, newsGen, horizon
 
-    MomentumStrategy strategy(1.0, 3, 0.01); // momentumFactor, lookbackPeriod, threshold
+    MomentumStrategy strategy("MomentumTrader", 1.0, 3, 0.01); // traderId, momentumFactor, lookbackPeriod, threshold
 
     std::vector<PriceStep> history;
     double dt = 1.0 / 252.0; // daily steps

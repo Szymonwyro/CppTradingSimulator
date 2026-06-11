@@ -82,6 +82,7 @@ std::vector<NewsEvent> NewsGenerator::generateNews(int horizon, RandomEngine& rn
             }
 
         events.push_back(event);
+        }
     }
 
     return events;

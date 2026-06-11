@@ -1,7 +1,11 @@
 #include "MomentumStrategy.h"
 
-MomentumStrategy::MomentumStrategy(double momentumFactor, int lookbackPeriod, double threshold)
-    : momentumFactor(momentumFactor), lookbackPeriod(lookbackPeriod), threshold(threshold) {}
+MomentumStrategy::MomentumStrategy(
+    std::string traderId,
+    double momentumFactor,
+    int lookbackPeriod,
+    double threshold)
+    : traderId(traderId), momentumFactor(momentumFactor), lookbackPeriod(lookbackPeriod), threshold(threshold) {}
 
 std::vector<Order> MomentumStrategy::generateOrders(
     const std::string traderId,
