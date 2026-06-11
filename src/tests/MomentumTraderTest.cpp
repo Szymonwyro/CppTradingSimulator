@@ -38,7 +38,7 @@ int main() {
             {}
         });
 
-        std::vector<Order> orders = strategy.generateOrders(1, history);
+        std::vector<Order> orders = strategy.generateOrders("MomentumTrader", history);
 
         if (orders.empty()) {
             std::cout << "Day " << i << ": no signal" << " | Price: " << newMid << "\n";

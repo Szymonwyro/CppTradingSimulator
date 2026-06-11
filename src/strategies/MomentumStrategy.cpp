@@ -4,7 +4,7 @@ MomentumStrategy::MomentumStrategy(double momentumFactor, int lookbackPeriod, do
     : momentumFactor(momentumFactor), lookbackPeriod(lookbackPeriod), threshold(threshold) {}
 
 std::vector<Order> MomentumStrategy::generateOrders(
-    int traderId,
+    const std::string traderId,
     const std::vector<PriceStep>& history
 ) {
     if ((int)history.size() < lookbackPeriod) {
@@ -26,7 +26,7 @@ std::vector<Order> MomentumStrategy::generateOrders(
         : history.back().ask * (1 + offset);
 
     return {{
-        "MomentumTrader",
+        traderId,
         buy ? Side::BUY : Side::SELL,
         limitPrice,
         1 // fixed quantity for simplicity

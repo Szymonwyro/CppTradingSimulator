@@ -3,12 +3,13 @@
 #include <cmath>
 
 ASMarketMakingStrategy::ASMarketMakingStrategy(
+    const std::string traderId,
     double gamma,
     double orderSize,
     int horizon,
     double k,
     double initialInventory
-) : gamma(gamma), orderSize(orderSize), horizon(horizon), k(k), inventory(initialInventory) {}
+) : traderId(traderId), gamma(gamma), orderSize(orderSize), horizon(horizon), k(k), inventory(initialInventory) {}
 
 void ASMarketMakingStrategy::onFill(double qty) {
     inventory += qty;
@@ -19,7 +20,7 @@ double ASMarketMakingStrategy::getInventory() const {
 }
 
 std::vector<Order> ASMarketMakingStrategy::generateOrders(
-    std::string traderId,
+    const std::string traderId,
     const std::vector<PriceStep>& history
 ) {
     const PriceStep& market = history.back();

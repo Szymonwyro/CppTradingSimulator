@@ -5,7 +5,7 @@
 RandomStrategy::RandomStrategy(RandomEngine& engine) : rng(engine) {}
 
 std::vector<Order> RandomStrategy::generateOrders(
-    int traderId,
+    const std::string traderId,
     const std::vector<PriceStep>& history
 ) {
     const PriceStep& market = history.back();
@@ -22,9 +22,8 @@ std::vector<Order> RandomStrategy::generateOrders(
     }
     int quantity = rng.randint(1, 10);
 
-    return {
-        Order{
-            "RandomTrader",
+    return {{
+            traderId,
             buy ? Side::BUY : Side::SELL,
             limitPrice,
             quantity

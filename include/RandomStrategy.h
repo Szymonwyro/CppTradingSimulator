@@ -13,7 +13,7 @@ public:
     RandomStrategy(RandomEngine& rng_);
 
     std::vector<Order> generateOrders(
-        int traderId,
+        const std::string traderId,
         const std::vector<PriceStep>& history
     ) override;
 };
