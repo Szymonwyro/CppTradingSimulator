@@ -8,7 +8,7 @@
 
 class ASMarketMakingStrategy : public Strategy {
     private:
-        const std::string traderId;
+        std::string traderId;
         double gamma;
         double orderSize;
         int horizon;
@@ -17,7 +17,7 @@ class ASMarketMakingStrategy : public Strategy {
 
     public:
         ASMarketMakingStrategy(
-            const std::string traderId,
+            std::string traderId,
             double gamma,
             double orderSize,
             int horizon,

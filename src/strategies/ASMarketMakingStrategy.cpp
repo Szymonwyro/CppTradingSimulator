@@ -3,7 +3,7 @@
 #include <cmath>
 
 ASMarketMakingStrategy::ASMarketMakingStrategy(
-    const std::string traderId,
+    std::string traderId,
     double gamma,
     double orderSize,
     int horizon,
