@@ -40,7 +40,9 @@ int main () {
         std::vector<Order> orders = strategy.generateOrders("RandomTrader", history);
     
             for (const auto& order : orders) {
-                std::cout << "Trader: " << order.traderId
+                std::cout 
+                        << "Day: " << i
+                        << "Trader: " << order.traderId
                         << " | " << (order.side == Side::BUY ? "BUY" : "SELL")
                         << " | qty: " << order.quantity
                         << " | Price: " << newMid

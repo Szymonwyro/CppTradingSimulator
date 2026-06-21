@@ -45,6 +45,7 @@ int main() {
 
             for (const auto& order : orders) {
                 std::cout
+                      << " | Day: " << i
                       << " | Trader: " << order.traderId
                       << " | " << (order.side == Side::BUY ? "BUY" : "SELL")
                       << " | qty: " << order.quantity
