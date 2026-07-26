@@ -19,3 +19,7 @@ MatchingEngine processes each order, generates Fills
 Fill sent back to agents via OnFill()
 .
 PnL, spread, inventory updated
+
+Now that we have agents almost working, we need them to be able to submit orders to the orderbook to edxecute.
+
+Most likely will be a need for a large amount of random traders so that other (more important) strategies actually get realistic fill probabilities
