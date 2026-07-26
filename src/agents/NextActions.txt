@@ -29,3 +29,4 @@ Standard metrics
     fillRate
 Then computeMetrics()
 
+Now that some of this logic is implemented, it is hard to check that it is actually working as intended so maybe building a dashboard is more urgent that thought before to monitor agent activity
