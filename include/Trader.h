@@ -42,6 +42,7 @@ class Trader {
 
         int getId() const;
         std::string getName() const;
+        std::string getTraderId() const;
         double getInventory() const;
         double getCash() const;
         double getUnrealisedPnL(double currentMid) const;
