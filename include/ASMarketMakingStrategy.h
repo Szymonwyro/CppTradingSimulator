@@ -8,7 +8,6 @@
 
 class ASMarketMakingStrategy : public Strategy {
     private:
-        std::string traderId;
         double gamma;
         double orderSize;
         int horizon;
@@ -17,7 +16,6 @@ class ASMarketMakingStrategy : public Strategy {
 
     public:
         ASMarketMakingStrategy(
-            std::string traderId,
             double gamma,
             double orderSize,
             int horizon,
@@ -26,11 +24,11 @@ class ASMarketMakingStrategy : public Strategy {
         );
 
         std::vector<Order> generateOrders(
-            const std::string traderId,
             const std::vector<PriceStep>& history
         ) override;
 
         void onFill(double qty);
+        std::string getTypeTag() const override;
 
         double getInventory() const;
 };
