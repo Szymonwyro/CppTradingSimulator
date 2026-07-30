@@ -14,7 +14,7 @@ int main() {
 
     PriceModel model(100.0, 0.01, 0.2, rng, &newsGen, 20); // initialPrice, drift, volatility, rng, newsGen, horizon
 
-    MomentumStrategy strategy("MomentumTrader", 1.0, 3, 0.01); // traderId, momentumFactor, lookbackPeriod, threshold
+    MomentumStrategy strategy(1.0, 3, 0.01); // traderId, momentumFactor, lookbackPeriod, threshold
 
     std::vector<PriceStep> history;
     double dt = 1.0 / 252.0; // daily steps
@@ -38,7 +38,7 @@ int main() {
             {}
         });
 
-        std::vector<Order> orders = strategy.generateOrders("MomentumTrader", history);
+        std::vector<Order> orders = strategy.generateOrders(history);
 
         if (orders.empty()) {
             std::cout << "Day " << i << ": no signal" << " | Price: " << newMid << "\n";
@@ -46,7 +46,7 @@ int main() {
 
         for (const auto& order : orders) {
             std::cout << "Day " << i
-                      << " | Trader: " << order.traderId
+                      << " | Trader: MomentumTrader" // << order.traderId
                       << " | " << (order.side == Side::BUY ? "BUY" : "SELL")
                       << " | qty: " << order.quantity
                       << " | Price: " << newMid

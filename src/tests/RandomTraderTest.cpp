@@ -9,11 +9,12 @@
 
 
 int main () {
-    RandomEngine rng(42);
+    RandomEngine priceRng(42);
+    RandomEngine strategyRng(123); //separate seed for trader rather than seed for price path
     NewsGenerator newsGen;
 
-    PriceModel model(100.0, 0.01, 0.2, rng, &newsGen, 100); // initialPrice, drift, volatility, rng, newsGen, horizon
-    RandomStrategy strategy(rng);
+    PriceModel model(100.0, 0.01, 0.2, priceRng, &newsGen, 100); // initialPrice, drift, volatility, rng, newsGen, horizon
+    RandomStrategy strategy(strategyRng);
 
     std::vector<PriceStep> history;
     double dt = 1.0 / 252.0; // daily steps
@@ -37,12 +38,12 @@ int main () {
             {}
         });
 
-        std::vector<Order> orders = strategy.generateOrders("RandomTrader", history);
+        std::vector<Order> orders = strategy.generateOrders(history);
     
             for (const auto& order : orders) {
                 std::cout 
                         << "Day: " << i
-                        << "Trader: " << order.traderId
+                        << "Trader: RandomTrader" // << order.traderId
                         << " | " << (order.side == Side::BUY ? "BUY" : "SELL")
                         << " | qty: " << order.quantity
                         << " | Price: " << newMid
