@@ -18,6 +18,7 @@ class Trader {
     private:
         int id;
         std::string name;
+        std::string traderId;
         std::unique_ptr<Strategy> strategy;
 
         double cash;
