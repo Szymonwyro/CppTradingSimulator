@@ -11,9 +11,8 @@ public:
     virtual ~Strategy() = default;
 
     virtual std::vector<Order> generateOrders(
-        std::string traderId,
         const std::vector<PriceStep>& history
     ) = 0;
-
+    virtual std::string getTypeTag() const = 0;
     virtual void onFill(double qty) {}
 };
