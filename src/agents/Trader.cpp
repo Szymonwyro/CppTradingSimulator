@@ -13,10 +13,16 @@ Trader::Trader(int id, std::string name, std::unique_ptr<Strategy> strategy, dou
     if (startingCash <= 0) {
         throw std::invalid_argument("Starting cash must be positive");
     }
+
+    traderId = this->strategy->getTypeTag() + "_" + std::to_string(id);
 }
 
 std::vector<Order> Trader::generateOrders(const std::vector<PriceStep>& history) {
-    return strategy->generateOrders(name, history);
+    auto orders = strategy->generateOrders(history);
+    for (auto& order : orders) {
+        order.traderId = traderId;
+    }
+    return orders;
 }
 
 void Trader::onFill(double price, double qty, Side side, int day) {
