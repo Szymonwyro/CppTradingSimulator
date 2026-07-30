@@ -9,7 +9,7 @@ engine/
 allows bots to impact prices by filling orderbook layers
 may require some modification as we currently generate a 'true price'
 
-key chagnes
+key changes
 
 add possible regime changes
 ensure pricemodel is not the actual price, just the fair price
