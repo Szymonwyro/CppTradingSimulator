@@ -58,6 +58,7 @@ double Trader::getTotalPnL(double currentMid) const {
 
 int Trader::getId() const { return id; }
 std::string Trader::getName() const { return name; }
+std::string Trader::getTraderId() const { return traderId; }
 double Trader::getInventory() const { return inventory; }
 double Trader::getCash() const { return cash; }
 
