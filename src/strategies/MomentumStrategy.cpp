@@ -1,14 +1,17 @@
 #include "MomentumStrategy.h"
+#include <cmath>
 
 MomentumStrategy::MomentumStrategy(
-    std::string traderId,
     double momentumFactor,
     int lookbackPeriod,
     double threshold)
-    : traderId(traderId), momentumFactor(momentumFactor), lookbackPeriod(lookbackPeriod), threshold(threshold) {}
+    : momentumFactor(momentumFactor), lookbackPeriod(lookbackPeriod), threshold(threshold) {}
+
+std::string MomentumStrategy::getTypeTag() const {
+    return "MomentumTrader";
+}
 
 std::vector<Order> MomentumStrategy::generateOrders(
-    const std::string traderId,
     const std::vector<PriceStep>& history
 ) {
     if ((int)history.size() < lookbackPeriod) {
@@ -18,6 +21,8 @@ std::vector<Order> MomentumStrategy::generateOrders(
     double oldPrice = history[history.size() - lookbackPeriod].mid;
     double currentPrice = history.back().mid;
     double momentum = (currentPrice - oldPrice) / oldPrice;
+
+    
 
     if (std::abs(momentum) < threshold) {
         return {};
@@ -30,7 +35,7 @@ std::vector<Order> MomentumStrategy::generateOrders(
         : history.back().ask * (1 + offset);
 
     return {{
-        traderId,
+        "",
         buy ? Side::BUY : Side::SELL,
         limitPrice,
         1 // fixed quantity for simplicity
