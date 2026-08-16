@@ -14,7 +14,7 @@ int main() {
     RandomEngine rng(42);
     NewsGenerator newsGen;
 
-    int horizon = 2016; // 4 years of trading days
+    int horizon = 2016; // 8 years of trading days
 
     double initialPrice = 100.0;
     double drift = 0.05;
