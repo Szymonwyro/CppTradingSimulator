@@ -22,7 +22,6 @@ std::vector<Order> MomentumStrategy::generateOrders(
     double currentPrice = history.back().mid;
     double momentum = (currentPrice - oldPrice) / oldPrice;
 
-    
 
     if (std::abs(momentum) < threshold) {
         return {};
