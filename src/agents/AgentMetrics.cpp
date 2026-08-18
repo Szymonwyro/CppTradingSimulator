@@ -6,7 +6,7 @@
 
 AgentMetrics computeMetrics(
 
- const std::vector<double>& pnlHistory,
+    const std::vector<double>& pnlHistory,
     const std::vector<double>& inventoryHistory,
     int totalFills,
     int totalOrdersSubmitted
