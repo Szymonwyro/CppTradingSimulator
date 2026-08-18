@@ -34,6 +34,11 @@ void Trader::onFill(double price, double qty, Side side, int day) {
         cash += price * qty;
     }
 
+    // Fix: this never told the strategy about the fill, so a strategy that
+    // tracks its own inventory (e.g. ASMarketMakingStrategy, for its
+    // reservation-price skew) never actually saw it update.
+    strategy->onFill(side == Side::BUY ? qty : -qty);
+
     fillHistory.push_back({ day, price, qty, side });
 }
 
