@@ -16,9 +16,30 @@ The long-term goal is a full simulated exchange: a stochastic fair-value process
 | Performance metrics (Sharpe, drawdown, inventory RMSE, fill rate) | **Built**, not yet wired into the demo executables below |
 | Probabilistic fill model & spread model | **Built** — lightweight, distance/size-based fill probability; not a real matching engine |
 | Limit order book & matching engine | **Not started** — header/source files exist but are currently empty; this is the next major milestone |
-| Visualization | **Built** — CSV export + a small `PricePlot.py` matplotlib script |
+| Visualization | **Built** — CSV export + a small `PricePlot.py` matplotlib script, plus the interactive web app below |
+| Interactive web app (tune agent counts/parameters, see PnL live) | **Built** — see [`../WebApp`](../WebApp) |
 
 The strategies currently run in isolated demo loops that read simulated price history and print the orders they *would* place — they aren't yet routed through a real order book, so nothing actually fills or clears against another agent. That wiring is the current focus.
+
+---
+
+## Web app — Strategy Lab
+
+[`../WebApp`](../WebApp) is a browser-based companion to this engine: pick how many
+agents run each strategy, tune their parameters (momentum factor, lookback window,
+risk aversion, order arrival intensity, and more), and watch each strategy's PnL
+update live against a shared simulated market. It's a TypeScript port of this
+engine's math (price model, strategies, fill model, metrics) running entirely
+client-side — see that folder's README for exactly what was ported as-is and what
+was deliberately changed. Two of those changes are worth pulling back into this
+C++ engine if you want the two to stay behaviourally identical:
+
+- `PriceModel`'s `volatility` constructor argument is currently unused here —
+  `sigma_baseline`/`sigma0` are hardcoded to `0.012` regardless of what's passed
+  in, so that parameter has no effect.
+- `Trader::onFill` never calls `strategy->onFill()`, so
+  `ASMarketMakingStrategy`'s own inventory tracking (and therefore its
+  reservation-price skew) never actually updates in the current demos.
 
 ---
 
@@ -136,8 +157,9 @@ python PricePlot.py   # plots mid/bid/ask from price_simulation.csv (needs panda
 ### Near-term
 - Implement `OrderBook` and `MatchingEngine` so orders actually match and fills flow back through `Trader::onFill()`, replacing the probabilistic `FillModel` shortcut for strategies that need real price impact.
 - Wire `AgentMetrics` into the demo executables so each run reports Sharpe, drawdown, inventory RMSE, and fill rate rather than just printing raw orders.
-- A lightweight dashboard/monitoring view — flagged in working notes as increasingly necessary now that agent logic exists but is hard to sanity-check without one.
+- ~~A lightweight dashboard/monitoring view~~ — done, see [`../WebApp`](../WebApp).
 - Let the order book's own trading activity feed back into price, so the current mid-price process becomes a latent fair value rather than the traded price itself.
+- Once a real order book exists, extend the web app to route agents through it instead of the probabilistic fill model, so agents trade against each other rather than an independent shared path.
 
 ### Mid-term — additional agent archetypes
 Ideas captured from breaking down real trading-competition strategy types, to implement as new `Strategy` subclasses:
