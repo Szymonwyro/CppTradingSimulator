@@ -5,12 +5,9 @@
 #include <vector>
 
 PriceModel::PriceModel(double initial_price, double drift, double volatility, RandomEngine& rng_, NewsGenerator* newsGen_, int horizon)
-    // Fix: sigma_baseline/sigma0 used to be hardcoded to 0.012 regardless of the
-    // `volatility` argument, so this constructor parameter had no effect on the
-    // simulation. Seeding both from it here is what makes it actually configurable.
-    : price(initial_price), mu(drift), sigma(volatility), rng(rng_),
+    : currentDay(0), price(initial_price), mu(drift), sigma(volatility), rng(rng_),
       sigma_baseline(volatility), sigma0(volatility),
-      newsGen(newsGen_), currentDay(0)
+      newsGen(newsGen_)
 {
     if (newsGen) {
         newsEvents = newsGen->generateNews(horizon, rng);
