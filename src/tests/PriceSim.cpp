@@ -26,7 +26,7 @@ int main() {
 
     std::vector<PriceStep> history;
 
-    for (size_t i = 0; i < horizon; ++i) {
+    for (int i = 0; i < horizon; ++i) {
         model.step(dt);
 
         // Compute bid, ask, and spread using a simple spread model
@@ -61,7 +61,7 @@ int main() {
         }
 
         history.push_back({ 
-            (int)i,
+            i,
             mid,
             prevMid,
             bid,

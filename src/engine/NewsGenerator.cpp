@@ -48,14 +48,6 @@ std::vector<NewsEvent> NewsGenerator::generateNews(int horizon, RandomEngine& rn
 
     //Random Events (Macro and Rumor)
 
-    std::random_device rd;
-    std::mt19937 gen(rd());
-
-    std::uniform_int_distribution<> dayDist(1,horizon);
-    std::uniform_int_distribution<> typeDist(0,1);
-    std::uniform_int_distribution<> signDist(0,1);
-
-
     double dailyEventProb = 0.05;
 
     for (int day = 1; day <= horizon; ++day) {
